@@ -1,0 +1,88 @@
+<?php
+
+/**
+ * Performs database updates and uninstallation cleanup for the Сommerce change
+ * prices module.
+ */
+
+/**
+ * Implements hook_install().
+ */
+function commerce_price_control_install() {
+  db_update('system')
+    ->fields(['weight' => 100])
+    ->condition('type', 'module')
+    ->condition('name', 'commerce_price_control')
+    ->execute();
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function commerce_price_control_uninstall() {
+  cache_clear_all('commerce_price_control', 'cache', TRUE);
+  cache_clear_all('commerce_price_control_decimal', 'cache', TRUE);
+  drupal_uninstall_schema('commerce_price_control');
+  drupal_uninstall_schema('commerce_price_control_decimal');
+  menu_rebuild();
+}
+
+/**
+ * Implements hook_schema().
+ */
+function commerce_price_control_schema() {
+  $schema['commerce_price_control'] = [
+    'fields' => [
+      'id' => ['type' => 'serial', 'size' => 'normal', 'not null' => TRUE],
+      'vocabulary_id' => [
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ],
+      'vocabulary_name' => [
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+      ],
+      'brand_field_label' => [
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+      ],
+      'brand_field_machine_name' => [
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+      ],
+    ],
+    'foreign keys' => [
+      'vocabulary_id_foreign_keys' => [
+        'table' => 'taxonomy_vocabulary',
+        'columns' => ['vid' => 'vocabulary_id'],
+      ],
+    ],
+    'primary key' => ['id'],
+  ];
+
+  $schema['commerce_price_control_decimal'] = [
+    'fields' => [
+      'id' => ['type' => 'serial', 'size' => 'normal', 'not null' => TRUE],
+      'currency_symbol' => [
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+      ],
+      'currency_decimal' => [
+        'type' => 'int',
+        'default' => 2,
+        'not null' => TRUE,
+      ],
+    ],
+    'unique keys' => [
+      'currency_symbol' => ['currency_symbol'],
+    ],
+    'primary key' => ['id'],
+  ];
+
+  return $schema;
+}

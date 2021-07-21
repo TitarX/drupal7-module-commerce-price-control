@@ -1,0 +1,84 @@
+form#commerce-price-control-form {
+  width: 670px !important;
+  margin-top: 20px !important;
+  margin-bottom: 5px !important;
+  padding: 20px !important;
+  border-radius: 4px !important;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5) !important;
+  background-color: #fff !important;
+}
+
+form#commerce-price-control-form fieldset,
+form#commerce-price-control-form fieldset .form-item,
+form#commerce-price-control-form fieldset .fieldset-wrapper {
+  border: 0;
+  margin: 0;
+  padding: 0;
+}
+
+form#commerce-price-control-form fieldset.price-changing-form-row:nth-child(-n+2) {
+  margin-bottom: 15px;
+}
+
+form#commerce-price-control-form .price-changing-form-row:last-child {
+  margin-bottom: 0 !important;
+}
+
+form#commerce-price-control-form .price-changing-form-cell {
+  float: left;
+  width: 325px;
+}
+
+form#commerce-price-control-form .price-changing-form-cell:nth-child(2) {
+  float: right;
+  width: 275px;
+}
+
+form#commerce-price-control-form #edit-row-third-cell-second,
+form#commerce-price-control-form #edit-row-third-cell-second > div {
+  text-align: right !important;
+}
+
+form#commerce-price-control-form input.form-submit {
+  margin: 0 5px 0 0 !important;
+}
+
+form#commerce-price-control-form label {
+  float: left;
+  display: inline-block !important;
+  width: 120px;
+}
+
+form#commerce-price-control-form .price-changing-form-cell:nth-child(2) label {
+  width: 80px !important;
+}
+
+form#commerce-price-control-form select {
+  float: left;
+  width: 190px;
+  padding: 4px 0 !important;
+}
+
+form#commerce-price-control-form input#edit-operand {
+  float: left;
+  width: 188px;
+  padding: 3px 0 !important;
+  border-radius: 4px !important;
+}
+
+button.close {
+  float: right !important;
+}
+
+.modal-title {
+  font-size: 16px !important;
+}
+
+.modal-dialog {
+  margin-top: 150px !important;
+  width: 450px !important;
+}
+
+.modal-lg {
+  width: 450px !important;
+}

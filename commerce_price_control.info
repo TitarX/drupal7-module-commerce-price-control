@@ -1,0 +1,11 @@
+name = Сommerce price control
+description = Сommerce price control
+package = Extra
+core = 7.x
+
+version = "7.x-1.0"
+
+dependencies[] = taxonomy
+dependencies[] = commerce
+dependencies[] = commerce_price
+dependencies[] = commerce_product

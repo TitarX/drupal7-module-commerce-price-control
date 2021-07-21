@@ -1,0 +1,99 @@
+<?php
+
+/**
+ * @file
+ * Сommerce change prices
+ */
+
+module_load_include(
+  'inc',
+  'commerce_price_control',
+  'includes/get_all_last_taxonomy_childs'
+);
+
+/**
+ * Implements hook_menu().
+ */
+function commerce_price_control_menu() {
+  $items['admin/commerce/config/price-control'] = [
+    'title' => t('Управление ценами'),
+    'description' => t('Управление ценами'),
+    'menu_name' => 'management',
+    'weight' => 0,
+    'page callback' => 'system_admin_menu_block_page',
+    'access callback' => 'check_roles',
+    'access arguments' => [['administrator']],
+    'file path' => drupal_get_path('module', 'system'),
+    'file' => 'system.admin.inc',
+    'type' => MENU_NORMAL_ITEM,
+  ];
+
+  $items['admin/commerce/config/price-control/change-prices'] = [
+    'title' => t('Настройка массового изменения цен'),
+    'description' => t('Настройка массового изменения цен'),
+    'menu_name' => 'management',
+    'weight' => 0,
+    'page callback' => 'drupal_get_form',
+    'page arguments' => ['commerce_price_control_settings_form'],
+    'access callback' => 'check_roles',
+    'access arguments' => [['administrator']],
+    'type' => MENU_NORMAL_ITEM,
+  ];
+
+  $items['admin/commerce/config/price-control/change-decimals-prices'] = [
+    'title' => t('Изменение количества знаков после запятой для валют'),
+    'description' => t('Изменение количества знаков после запятой для валют'),
+    'menu_name' => 'management',
+    'weight' => 0,
+    'page callback' => 'drupal_get_form',
+    'page arguments' => ['commerce_price_control_decimal_form'],
+    'access callback' => 'check_roles',
+    'access arguments' => [['administrator']],
+    'type' => MENU_NORMAL_ITEM,
+  ];
+
+  $items['admin/commerce/products/change-prices'] = [
+    'title' => t('Массовое изменение цен'),
+    'description' => t('Массовое изменение цен'),
+    'menu_name' => 'management',
+    'weight' => 100,
+    'page callback' => 'drupal_get_form',
+    'page arguments' => ['commerce_price_control_form'],
+    'access callback' => 'check_roles',
+    'access arguments' => [['administrator', 'manager']],
+    'type' => MENU_LOCAL_TASK,
+  ];
+
+  return $items;
+}
+
+function check_roles($access_roles) {
+  global $user;
+
+  foreach ($access_roles as $access_role) {
+    if (in_array($access_role, $user->roles)) {
+      return TRUE;
+      break;
+    }
+  }
+
+  return FALSE;
+}
+
+module_load_include(
+  'inc',
+  'commerce_price_control',
+  'includes/commerce_price_control_settings_form'
+);
+
+module_load_include(
+  'inc',
+  'commerce_price_control',
+  'includes/commerce_price_control_form'
+);
+
+module_load_include(
+  'inc',
+  'commerce_price_control',
+  'includes/commerce_price_control_decimal_form'
+);
